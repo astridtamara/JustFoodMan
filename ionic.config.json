@@ -1,0 +1,7 @@
+{
+  "name": "JustFoodMan",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
