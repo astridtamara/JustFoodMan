@@ -15,6 +15,18 @@ import { ProfilePage } from "../pages/profile/profile";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
+import { AngularFireModule } from "angularfire2";
+import { AngularFireAuth } from "angularfire2/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
+  authDomain: "justfoodman-umn.firebaseapp.com",
+  databaseURL: "https://justfoodman-umn.firebaseio.com",
+  projectId: "justfoodman-umn",
+  storageBucket: "justfoodman-umn.appspot.com",
+  messagingSenderId: "845038727096"
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -26,7 +38,11 @@ import { SplashScreen } from "@ionic-native/splash-screen";
     RandomPage,
     ProfilePage
   ],
-  imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
+  ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -41,7 +57,8 @@ import { SplashScreen } from "@ionic-native/splash-screen";
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AngularFireAuth
   ]
 })
 export class AppModule {}
