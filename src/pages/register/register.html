@@ -3,6 +3,38 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Ini Register</p>
-  <button ion-button (click)="onRegister()">Register</button>
+  <form [formGroup]="registerForm">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Nama : </ion-label>
+          <ion-input type="text" formControlName="nama"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Email : </ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Password : </ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button (click)="onRegister()" [disabled]=!registerForm.valid>Register</button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
 </ion-content>
