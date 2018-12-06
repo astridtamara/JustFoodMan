@@ -1,5 +1,27 @@
 <ion-header>
-  <ion-navbar> <ion-title> Favorites </ion-title> </ion-navbar>
+  <ion-navbar> <ion-title> Favorites</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini list favorite resto</p> </ion-content>
+<ion-content padding>
+  <ion-card>
+      <ion-row>
+        <img height="385" src="assets/imgs/port-five-six.jpg">
+      
+        <ion-card-content (click)="openResto()">
+          <ion-card-title>
+            Port Five Six
+          </ion-card-title>
+          <h4>Gading Serpong, Tangerang</h4>
+          <p>
+            The most popular coffee shop in Gading Serpong.
+          </p>
+        </ion-card-content>
+      </ion-row>
+      <ion-row no-padding>
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name="heart"></ion-icon>
+          Favorite
+        </button>
+      </ion-row>
+  </ion-card>
+</ion-content>
