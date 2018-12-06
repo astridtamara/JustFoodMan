@@ -30,11 +30,16 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <button ion-button (click)="onRegister()" [disabled]=!registerForm.valid>Register</button>
+      <ion-col text-center>
+        <button
+          ion-button
+          col-5
+          (click)="onRegister()"
+          [disabled]="!registerForm.valid"
+        >
+          Register
+        </button>
       </ion-col>
     </ion-row>
-
   </form>
-
 </ion-content>

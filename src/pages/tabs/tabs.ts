@@ -20,8 +20,6 @@ export class TabsPage {
   constructor(private authService:AuthService) { }
 
   ionViewWillEnter() {
-    let activeUser = this.authService.getActiveUser();
-    console.log(activeUser.uid);
   }
 
 }

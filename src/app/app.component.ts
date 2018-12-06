@@ -2,9 +2,10 @@ import { Component } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
-import firebase from 'firebase';
+
+import {AngularFireAuth} from 'angularfire2/auth'
+
 import { LoginPage } from "../pages/login/login";
-import { HomePage } from "../pages/home/home";
 import { TabsPage } from "../pages/tabs/tabs";
 
 @Component({
@@ -16,14 +17,11 @@ export class MyApp {
   constructor(
     platform: Platform,
     statusBar: StatusBar,
-    splashScreen: SplashScreen
+    splashScreen: SplashScreen,
+    afAuth: AngularFireAuth
   ) {
-    firebase.initializeApp({
-      apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
-      authDomain: "justfoodman-umn.firebaseapp.com"
-    });
 
-    firebase.auth().onAuthStateChanged(user => {
+    afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         this.rootPage = TabsPage;
       }

@@ -1,7 +1,5 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+  <ion-navbar> <ion-title>Login</ion-title> </ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -25,16 +23,24 @@
     </ion-row>
     <ion-row>
       <ion-col text-center>
-        <button ion-button col-5 (click)="onLogin()" [disabled]="!loginForm.valid">Login</button>
+        <button
+          ion-button
+          col-5
+          (click)="onLogin()"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
       </ion-col>
     </ion-row>
   </form>
 
-
-
-  <ion-row>
-    <ion-col text-center>
-      <button ion-button col-5 (click)="onRegister()">Register</button>
+  <ion-row >
+    <ion-col text-center no-padding>
+      <p>Dont have any account?<a class="regis" (click)="onRegister()"> Regis Here</a></p>
     </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center no-padding> <a class="forgot-password" (click)="forgotPassword()">Forgot your password?</a> </ion-col>
   </ion-row>
 </ion-content>
