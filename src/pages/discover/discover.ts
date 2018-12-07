@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
+import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 
 @Component({
   selector: "page-discover",
@@ -8,22 +9,17 @@ import { NavController } from "ionic-angular";
 export class DiscoverPage {
 
   searchQuery: string = '';
-  items: string[];
+  itemList: AngularFireList<any> ;
+  items: any;
 
-  constructor(public navCtrl: NavController) {
-    this.openResto();
-  }
-
-  // Display selected restaurant
-  openResto(id: string) {
-    this.navCtrl.push("RestoDetailsPage", {
-      data: id
-    });
+  constructor(public navCtrl: NavController, public afDatabase: AngularFireDatabase) {
+    this.itemList = afDatabase.list("/restaurant");
+    this.items = this.itemList.valueChanges();
   }
 
   getItems(ev: any) {
     // Reset items back to all of the items
-    this.openResto();
+    
 
     // set val to the value of the searchbar
     const val = ev.target.value;
@@ -36,4 +32,10 @@ export class DiscoverPage {
     }
   }
 
+  // Display selected restaurant
+  openResto(id: string) {
+    this.navCtrl.push("RestoDetailsPage", {
+      data: id
+    });
+  }
 }
