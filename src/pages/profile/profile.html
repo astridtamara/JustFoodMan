@@ -7,8 +7,10 @@
 </ion-header>
 
 <ion-content >
-  <!-- <p>Ini profile orang yang log in</p> -->
   <ion-list>
+    <ion-item *ngFor="let item of profile | async">
+      asdasd
+    </ion-item>
     <ion-item>
       <ion-avatar item-start>
         <img src="">
@@ -20,17 +22,17 @@
 
     <ion-item>
       <ion-label>Following</ion-label>
-      <ion-label>100</ion-label>
+      <ion-label>{{[profile?.Following]}}</ion-label>
     </ion-item>
 
     <ion-item>
       <ion-label>Followers</ion-label>
-      <ion-label>100</ion-label>
+      <p>{{profile?.Followers}}</p>
     </ion-item>
 
     <ion-item>
       <ion-label>Posts</ion-label>
-      <ion-label>100</ion-label>
+      <ion-label>{{profile?.Posts}}</ion-label>
     </ion-item>
 
     <button ion-button full>Logout</button>
