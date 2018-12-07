@@ -6,7 +6,10 @@ import { NavController } from "ionic-angular";
   templateUrl: "discover.html"
 })
 export class DiscoverPage {
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {
+    searchQuery: string = '';
+    items: string[];
+  }
 
   // Display selected restaurant
   openResto(id: string) {
