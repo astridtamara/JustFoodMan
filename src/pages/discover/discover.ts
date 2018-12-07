@@ -6,9 +6,12 @@ import { NavController } from "ionic-angular";
   templateUrl: "discover.html"
 })
 export class DiscoverPage {
+
+  searchQuery: string = '';
+  items: string[];
+
   constructor(public navCtrl: NavController) {
-    searchQuery: string = '';
-    items: string[];
+    this.openResto();
   }
 
   // Display selected restaurant
@@ -17,4 +20,20 @@ export class DiscoverPage {
       data: id
     });
   }
+
+  getItems(ev: any) {
+    // Reset items back to all of the items
+    this.openResto();
+
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
+
 }
