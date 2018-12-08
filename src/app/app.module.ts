@@ -9,7 +9,7 @@ import { TabsPage } from "../pages/tabs/tabs";
 import { HomePage } from "../pages/home/home";
 import { FavoritesPage } from "../pages/favorites/favorites";
 import { DiscoverPage } from "../pages/discover/discover";
-import { RandomPage } from "../pages/random/random";
+import { Random2Page } from "../pages/random2/random2";
 import { ProfilePage } from "../pages/profile/profile";
 
 import { StatusBar } from "@ionic-native/status-bar";
@@ -46,7 +46,7 @@ const firebaseConfig = {
     HomePage,
     FavoritesPage,
     DiscoverPage,
-    RandomPage,
+    Random2Page,
     ProfilePage
   ],
   imports: [
@@ -67,7 +67,7 @@ const firebaseConfig = {
     HomePage,
     FavoritesPage,
     DiscoverPage,
-    RandomPage,
+    Random2Page,
     ProfilePage
   ],
   providers: [
