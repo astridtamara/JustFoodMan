@@ -21,6 +21,8 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AuthService } from "../service/AuthService";
 import { HttpModule } from "@angular/http";
 
+import { PipesModule } from "../pipes/pipes.module";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
   authDomain: "justfoodman-umn.firebaseapp.com",
@@ -47,7 +49,8 @@ const firebaseConfig = {
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +67,7 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AuthService,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

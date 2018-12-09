@@ -22,7 +22,7 @@
     </ion-col>
   </ion-row>
 
-  <div *ngFor="let status of (statuses | async)">
+  <div *ngFor="let status of (statuses | async | reverse)">
     <ion-row
       padding-horizontal
       class="card"
