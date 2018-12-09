@@ -21,43 +21,47 @@
       </button>
     </ion-col>
   </ion-row>
-  <ion-row
-    padding-horizontal
-    class="card"
-    *ngFor="let status of (statusList | async)"
-  >
-    <ion-col col-2>
-      <img class="avatar" src="assets/imgs/danik.jpeg" />
-    </ion-col>
-    <ion-col col>
-      <ion-row justify-content-between align-items-center no-padding>
-        <ion-col no-padding>
-          <span class="account-name">Edward, the Foodie</span>
-        </ion-col>
-        <ion-col col-2 text-right no-padding>
-          <ion-icon name="star" color="secondary"> </ion-icon>
-          <span class="rating-text">4.50</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="status-row">
-        <span class="location-text">The Bunker Cafe</span><br />
-      </ion-row>
-      <ion-row class="status-row">
-        <span class="date-text">09 December 2018 22:48</span><br />
-      </ion-row>
-      <ion-row class="status-row">
-        <span class="status-text"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id nulla
-          sit amet neque sagittis rutrum eleifend sit amet ipsum. Quisque libero
-          mauris, feugiat ut magna nec, consectetur cursus risus. Ut egestas
-          commodo tristique. Nam a consectetur libero, sed laoreet eros. Nulla
-          at suscipit lectus. Quisque libero arcu, tempor vel enim sit amet,
-          vulputate ultricies sem. Sed sit amet enim tortor. Proin nisi enim,
-          dictum a ante eget, fermentum imperdiet velit.</span
-        ><br />
-      </ion-row>
-    </ion-col>
-  </ion-row>
+
+  <div *ngFor="let status of (statuses | async)">
+    <ion-row
+      padding-horizontal
+      class="card"
+      *ngIf="(status.data | async) as data"
+    >
+      <ion-col col-2>
+        <img class="avatar" [src]="(status.user | async)?.photo" />
+      </ion-col>
+      <ion-col col>
+        <ion-row justify-content-between align-items-center no-padding>
+          <ion-col no-padding>
+            <span class="account-name">{{ (status.user | async)?.name }}</span>
+          </ion-col>
+          <ion-col col-2 text-right no-padding>
+            <ion-icon name="star" color="secondary"> </ion-icon>
+            <span class="rating-text"
+              >{{ convertToNumber(data.rating) }}.00</span
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="location-text">{{
+            (status.restaurant | async)?.name
+          }}</span>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="date-text">
+            {{ data.date | date: 'dd MMMM yyyy H:mm' }}
+          </span>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="status-text">
+            {{ data.description | slice: 0:200 }}
+            {{ data.description.length > 150 ? '...' : null }}
+          </span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
   <ion-fab bottom right>
     <button ion-fab color="secondary" (click)="onCreateStatus()">
       <ion-icon name="add"></ion-icon>
