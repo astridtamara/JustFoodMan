@@ -2,7 +2,7 @@
 
   <ion-navbar>
     <ion-title>Restaurant Details</ion-title>
-  </ion-navbar>
+  </ion-navbar> 
 
 </ion-header>
 
@@ -12,8 +12,13 @@
     <img height="350" src="assets/imgs/port-five-six.jpg">
 
     <!-- Restaurant Name -->
+<<<<<<< HEAD
     <ion-row>
       <h1>Port Five Six</h1> 
+=======
+    <ion-row>      
+      <h1>{{ (restaurantDetail | async)?.name }}</h1> 
+>>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
     </ion-row>
         
     <!--Location -->
@@ -23,6 +28,7 @@
     </ion-col>
 
     <!-- description -->
+<<<<<<< HEAD
     <p>The most popular coffe shop in Gading Serpong, Tangerang. It's a dummy text.</p>
     <h4>Operational Time </h4>
     <h4>Contact </h4>
@@ -30,11 +36,34 @@
     <!-- button review -->
     <ion-row>
       <ion-col>
+=======
+    <h4>{{ (restaurantDetail | async)?.address }}</h4>
+    <h4>{{ (restaurantDetail | async)?.openHours }} </h4>
+    <h4>{{ (restaurantDetail | async)?.telephone }} </h4>
+    <p>{{ (restaurantDetail | async)?.description }}</p>
+
+    <!-- button review -->
+     <ion-row>
+      <ion-col col-3>
+>>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
         <button ion-button icon-start clear>
           <ion-icon name="text"></ion-icon>
           Reviews
         </button>
       </ion-col>
+<<<<<<< HEAD
+=======
+      <ion-col col-3 offset-3>
+        <button *ngIf="!favorite()" ion-button clear small color="yellow" (click)="change()" icon-start>
+          <ion-icon name="heart"></ion-icon>
+          Favorite
+        </button>
+        <button *ngIf="favorite()" ion-button clear small color="danger" (click)="change()" icon-start>
+          <ion-icon name="heart"></ion-icon>
+          Unfavorite
+        </button>
+      </ion-col>
+>>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
     </ion-row>
   </ion-item>
 
@@ -51,6 +80,7 @@
       <p>This is dummy review from JustFoodMan.</p>
     </ion-card-content>
   </ion-card>
+<<<<<<< HEAD
 
   <ion-card>
       <ion-item>
@@ -65,5 +95,8 @@
       </ion-card-content>
     </ion-card>
     <!-- End Reviews -->
+=======
+  <!-- End Reviews -->
+>>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
   
 </ion-content>

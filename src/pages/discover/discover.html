@@ -8,4 +8,13 @@
 
 <ion-content padding>
   <p>Ini search resto</p>
+  <div>
+    {{ (restaurant | async)?.id }}
+  </div>
+  <button (click)="openResto()">
+    Go to this restaurant
+  </button> 
+  <ion-item>
+    muncul gllla?
+  </ion-item>
 </ion-content>

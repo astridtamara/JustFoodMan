@@ -2,14 +2,14 @@
   <ion-navbar> <ion-title> Favorites</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card>
+<ion-content padding> 
+  <ion-card *ngFor="let item of favorite | async">
       <ion-row>
         <img height="385" src="assets/imgs/port-five-six.jpg">
       
         <ion-card-content (click)="openResto()">
           <ion-card-title>
-            Port Five Six
+            {{ (favorite | async)?.name }}
           </ion-card-title>
           <h4>Gading Serpong, Tangerang</h4>
           <p>
@@ -18,7 +18,7 @@
         </ion-card-content>
       </ion-row>
       <ion-row no-padding>
-        <button ion-button clear small color="danger" icon-start>
+        <button *ngIf="!isFavorite()" ion-button clear small color="yellow" (click)="change()" icon-start>
           <ion-icon name="heart"></ion-icon>
           Favorite
         </button>
