@@ -7,13 +7,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'resto-details.html',
 })
 export class RestoDetailsPage {
-<<<<<<< HEAD
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-=======
   favorites:AngularFireList<any>;
   
   restaurant:AngularFireObject<any>;
@@ -36,7 +29,6 @@ export class RestoDetailsPage {
 
   ionViewWillEnter() {
     this.currentUser = this.authService.getActiveUser().uid;
->>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
     console.log('ionViewDidLoad RestoDetailsPage');
   }
 
@@ -48,8 +40,6 @@ export class RestoDetailsPage {
   openAccount() {
     this.navCtrl.push("AccountDetailsPage");
   }
-<<<<<<< HEAD
-=======
 
   checkFavorite(){
   }
@@ -72,5 +62,4 @@ export class RestoDetailsPage {
     }
     return this.restoService.change();
   }
->>>>>>> favorites, unfavorites, tapi belum bisa add restaurant to favoritePage
 }
