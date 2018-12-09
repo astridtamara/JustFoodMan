@@ -44,7 +44,7 @@ export class RegisterPage {
   }
 
   onRegister() {
-    let regis = this.authService.signup(
+    let regis = this.authService.signUp(
       this.registerForm.value.email,
       this.registerForm.value.password
     );
@@ -54,7 +54,7 @@ export class RegisterPage {
         .getIdToken()
         .then((token: string) => {
           const newUsers = this.usersList.push({});
- 
+
           newUsers.set({
             id: newUsers.key,
             email: this.registerForm.value.email,

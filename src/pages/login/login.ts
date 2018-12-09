@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { TabsPage } from "../tabs/tabs";
-import { initializeApp } from "firebase";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from "../../service/AuthService";
 
@@ -41,31 +40,31 @@ export class LoginPage {
   }
 
   onLogin() {
-    let sign_in = this.authService.signin(
-      this.loginForm.value.email,
-      this.loginForm.value.password
-    );
-
-    sign_in.catch(function(error) {
-      alert(error);
-    });
-    // this.navCtrl.setRoot(TabsPage);
+    this.authService
+      .signIn(this.loginForm.value.email, this.loginForm.value.password)
+      .then(() => {
+        this.navCtrl.setRoot(TabsPage);
+      })
+      .catch(error => {
+        Swal("Oops", error.message, "error");
+      });
   }
 
   onRegister() {
     this.navCtrl.push("RegisterPage");
   }
 
-  forgotPassword() {
+  onForgotPassword() {
     Swal({
-      title: "Please enter your email address",
-      text: "We will send blablabla",
+      title: "Forgot Password",
+      text:
+        "Please enter your email below. We will send a password reset link to your email.",
       input: "email",
       inputAttributes: {
         autocapitalize: "off"
       },
       showCancelButton: true,
-      confirmButtonText: "Reset password",
+      confirmButtonText: "Submit",
       showLoaderOnConfirm: true,
       preConfirm: email => {
         this.authService.resetPassword(email);
@@ -73,7 +72,11 @@ export class LoginPage {
       allowOutsideClick: () => !Swal.isLoading()
     }).then(result => {
       if (result.value) {
-        Swal("Link successfully sent to your email","Please check your email "+result.value,"success");
+        Swal(
+          "Please check your email",
+          "We have sent a password reset link to your email",
+          "success"
+        );
       }
     });
   }

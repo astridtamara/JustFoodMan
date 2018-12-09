@@ -35,12 +35,20 @@
     </ion-row>
   </form>
 
-  <ion-row >
+  <ion-row>
     <ion-col text-center no-padding>
-      <p>Dont have any account?<a class="regis" (click)="onRegister()"> Regis Here</a></p>
+      <p>
+        Dont have any account?<a class="regis" (click)="onRegister()">
+          Register here!</a
+        >
+      </p>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col text-center no-padding> <a class="forgot-password" (click)="forgotPassword()">Forgot your password?</a> </ion-col>
+    <ion-col text-center no-padding>
+      <a class="forgot-password" (click)="onForgotPassword()"
+        >Forgot your password?</a
+      >
+    </ion-col>
   </ion-row>
 </ion-content>

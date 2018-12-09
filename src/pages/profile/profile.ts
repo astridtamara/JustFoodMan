@@ -14,7 +14,7 @@ export class ProfilePage {
   }
 
   onLogOut(){
-    this.authService.logout();
+    this.authService.logOut();
   }
 
 }
