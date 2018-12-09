@@ -20,3 +20,4 @@ export class AuthService {
   resetPassword(email: string) {
     return firebase.auth().sendPasswordResetEmail(email);
   }
+}
