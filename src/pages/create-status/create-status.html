@@ -1,5 +1,134 @@
 <ion-header>
-  <ion-navbar> <ion-title>Create Status</ion-title> </ion-navbar>
+  <ion-navbar> <ion-title>Post Review</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini buat bikin status</p> </ion-content>
+<ion-content padding>
+  <ion-row padding-horizontal class="card">
+    <ion-col col-2>
+      <img class="avatar" src="assets/imgs/minhyun.jpg" />
+    </ion-col>
+    <ion-col col>
+      <ion-row>
+        <span class="account-name">Jacob, the Great Foodie</span>
+      </ion-row>
+      <ion-row>
+        <span class="title-text ">Let the world hears what you gotta say.</span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <form [formGroup]="reviewForm">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" stacked>Restaurant</ion-label>
+          <ion-input
+            class="hidden"
+            type="text"
+            formControlName="restaurant"
+            placeholder="Where did you have your yum yum?"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label color="primary" stacked>Rating</ion-label>
+          <ion-input type="hidden" formControlName="rating"></ion-input>
+        </ion-item>
+        <ion-row padding-left>
+          <button
+            ion-button
+            clear
+            small
+            icon-only
+            color="secondary"
+            (click)="setRating(1)"
+          >
+            <ion-icon name="star"></ion-icon>
+          </button>
+          <button
+            ion-button
+            clear
+            small
+            icon-only
+            [color]="
+              reviewForm.controls.rating.value >= 2 ? 'secondary' : 'shadow'
+            "
+            (click)="setRating(2)"
+          >
+            <ion-icon name="star"></ion-icon>
+          </button>
+          <button
+            ion-button
+            clear
+            small
+            icon-only
+            [color]="
+              reviewForm.controls.rating.value >= 3 ? 'secondary' : 'shadow'
+            "
+            (click)="setRating(3)"
+          >
+            <ion-icon name="star"></ion-icon>
+          </button>
+          <button
+            ion-button
+            clear
+            small
+            icon-only
+            [color]="
+              reviewForm.controls.rating.value >= 4 ? 'secondary' : 'shadow'
+            "
+            (click)="setRating(4)"
+          >
+            <ion-icon name="star"></ion-icon>
+          </button>
+          <button
+            ion-button
+            clear
+            small
+            icon-only
+            [color]="
+              reviewForm.controls.rating.value >= 5 ? 'secondary' : 'shadow'
+            "
+            (click)="setRating(5)"
+          >
+            <ion-icon name="star"></ion-icon>
+          </button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" stacked>Review</ion-label>
+          <ion-textarea
+            type="text"
+            formControlName="review"
+            placeholder="Is it superb yum or nay? Please share :)"
+            rows="8"
+            maxLength="550"
+          ></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button col-5 color="light" (click)="onCancel()">
+          Cancel
+        </button>
+        <button
+          ion-button
+          col-5
+          (click)="onSubmit()"
+          [disabled]="!reviewForm.valid"
+        >
+          Post
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

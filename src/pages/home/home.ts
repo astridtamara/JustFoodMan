@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { ModalController, NavController } from "ionic-angular";
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { Observable } from "rxjs/Observable";
 import { AuthService } from "../../service/AuthService";
@@ -15,7 +15,8 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public authService: AuthService,
-    public afDatabase: AngularFireDatabase
+    public afDatabase: AngularFireDatabase,
+    public modalCtrl: ModalController
   ) {
     this.statusList = afDatabase.list("/statuses", ref => {
       let query = ref.orderByChild("date");
@@ -37,20 +38,8 @@ export class HomePage {
   }
 
   onCreateStatus() {
-    let uid = this.authService.getActiveUser()
-      ? this.authService.getActiveUser().uid
-      : "NKBBtGDJcYSHRZqJs1zO0sGt4kh1";
-    const newUsers = this.statusList.push({});
-
-    newUsers.set({
-      id: newUsers.key,
-      accountID: uid,
-      restoID: "rest_2",
-      rating: 5,
-      description:
-        "Ut egestas commodo tristique. Nam a consectetur libero, sed laoreet eros. Nulla at suscipit lectus. Quisque libero arcu, tempor vel enim sit amet, vulputate ultricies sem. Sed sit amet enim tortor. Proin nisi enim, dictum a ante eget, fermentum imperdiet velit.",
-      date: new Date().toISOString()
-    });
+    let profileModal = this.modalCtrl.create("CreateStatusPage");
+    profileModal.present();
   }
 
   convertToNumber(input: any) {

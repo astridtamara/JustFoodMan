@@ -1,3 +1,21 @@
 page-create-status {
-
+  .avatar {
+    width: 12.5vw;
+    height: 12.5vw;
+    border-radius: 50%;
+    border: 1px solid map-get($colors, secondary);
+    object-fit: cover;
+  }
+  .account-name {
+    font-size: 1.6rem;
+    color: map-get($colors, primary);
+    padding: 0 1rem;
+  }
+  .title-text {
+    padding: 0 1rem;
+    margin-top: 8px;
+  }
+  .hidden {
+    display: 'none';
+  }
 }
