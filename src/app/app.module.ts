@@ -35,7 +35,6 @@ import { PipesModule } from "../pipes/pipes.module";
 import { AgmCoreModule } from '@agm/core';
 import { PlacesProvider } from "../pages/providers/places";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
   authDomain: "justfoodman-umn.firebaseapp.com",
@@ -84,10 +83,7 @@ const firebaseConfig = {
     RandomPage,
     PlacePage,
     AddPlacePage,
-    SetLocationPage,
     ProfilePage
-  ],
-  providers: [
     Geolocation,
     File,
     StatusBar,
