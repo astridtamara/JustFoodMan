@@ -1,10 +1,8 @@
 page-login {
-
 }
 
-.regis{
-    
+.regis {
 }
-.forgot-password{
-    color: red !important;
+.forgot-password {
+  color: map-get($colors, primary);
 }

@@ -1,3 +1,38 @@
 page-home {
-
+  .avatar {
+    width: 12.5vw;
+    height: 12.5vw;
+    border-radius: 50%;
+    border: 1px solid map-get($colors, secondary);
+    object-fit: cover;
+  }
+  .card {
+    padding: 8px 0px;
+    border-bottom: 12px solid map-get($colors, shadow);
+  }
+  .account-name {
+    font-size: 1.6rem;
+    color: map-get($colors, primary);
+    padding: 0 1rem;
+  }
+  .button-round-ios {
+    padding: 0 1rem;
+  }
+  .button-round-md {
+    padding: 0 1rem;
+  }
+  .status-row {
+    padding: 0 1rem;
+  }
+  .rating-text {
+    color: map-get($colors, secondary);
+  }
+  .location-text {
+    text-decoration: underline;
+    color: map-get($colors, secondary);
+  }
+  .date-text {
+    color: map-get($colors, main-light);
+    margin-bottom: 6px;
+  }
 }

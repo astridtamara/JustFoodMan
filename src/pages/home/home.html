@@ -2,4 +2,65 @@
   <ion-navbar> <ion-title>Home</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini timeline</p> </ion-content>
+<ion-content>
+  <ion-row padding-horizontal class="card">
+    <ion-col col-2>
+      <img class="avatar" src="assets/imgs/minhyun.jpg" />
+    </ion-col>
+    <ion-col col>
+      <span class="account-name">Jacob, the Great Foodie</span> <br />
+      <button
+        ion-button
+        color="secondary"
+        outline
+        round
+        small
+        (click)="onCreateStatus()"
+      >
+        Post recent yum yum food?
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row
+    padding-horizontal
+    class="card"
+    *ngFor="let status of (statusList | async)"
+  >
+    <ion-col col-2>
+      <img class="avatar" src="assets/imgs/danik.jpeg" />
+    </ion-col>
+    <ion-col col>
+      <ion-row justify-content-between align-items-center no-padding>
+        <ion-col no-padding>
+          <span class="account-name">Edward, the Foodie</span>
+        </ion-col>
+        <ion-col col-2 text-right no-padding>
+          <ion-icon name="star" color="secondary"> </ion-icon>
+          <span class="rating-text">4.50</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="status-row">
+        <span class="location-text">The Bunker Cafe</span><br />
+      </ion-row>
+      <ion-row class="status-row">
+        <span class="date-text">09 December 2018 22:48</span><br />
+      </ion-row>
+      <ion-row class="status-row">
+        <span class="status-text"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id nulla
+          sit amet neque sagittis rutrum eleifend sit amet ipsum. Quisque libero
+          mauris, feugiat ut magna nec, consectetur cursus risus. Ut egestas
+          commodo tristique. Nam a consectetur libero, sed laoreet eros. Nulla
+          at suscipit lectus. Quisque libero arcu, tempor vel enim sit amet,
+          vulputate ultricies sem. Sed sit amet enim tortor. Proin nisi enim,
+          dictum a ante eget, fermentum imperdiet velit.</span
+        ><br />
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-fab bottom right>
+    <button ion-fab color="secondary" (click)="onCreateStatus()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
