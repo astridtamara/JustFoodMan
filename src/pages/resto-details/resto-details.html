@@ -2,11 +2,66 @@
 
   <ion-navbar>
     <ion-title>Restaurant Details</ion-title>
-  </ion-navbar>
+  </ion-navbar> 
 
 </ion-header>
 
-
 <ion-content padding>
-<p>Ini detail informasi resto</p>
+  <ion-item>
+    <!-- images -->
+    <img height="350" src="assets/imgs/port-five-six.jpg">
+
+    <!-- Restaurant Name -->
+    <ion-row>      
+      <h1>{{ (restaurantDetail | async)?.name }}</h1> 
+    </ion-row>
+        
+    <!--Location -->
+    <ion-col>
+      <ion-icon name="pin"></ion-icon>
+      Gading Serpong, Tangerang
+    </ion-col>
+
+    <!-- description -->
+    <h4>{{ (restaurantDetail | async)?.address }}</h4>
+    <h4>{{ (restaurantDetail | async)?.openHours }} </h4>
+    <h4>{{ (restaurantDetail | async)?.telephone }} </h4>
+    <p>{{ (restaurantDetail | async)?.description }}</p>
+
+    <!-- button review -->
+     <ion-row>
+      <ion-col col-3>
+        <button ion-button icon-start clear>
+          <ion-icon name="text"></ion-icon>
+          Reviews
+        </button>
+      </ion-col>
+      <ion-col col-3 offset-3>
+        <button *ngIf="!favorite()" ion-button clear small color="yellow" (click)="change()" icon-start>
+          <ion-icon name="heart"></ion-icon>
+          Favorite
+        </button>
+        <button *ngIf="favorite()" ion-button clear small color="danger" (click)="change()" icon-start>
+          <ion-icon name="heart"></ion-icon>
+          Unfavorite
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+
+  <!-- reviews -->
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+          <img src="assets/imgs/logo.png">
+        </ion-avatar>
+        <h2>Willy William</h2>
+    </ion-item>
+    
+    <ion-card-content>
+      <p>This is dummy review from JustFoodMan.</p>
+    </ion-card-content>
+  </ion-card>
+  <!-- End Reviews -->
+  
 </ion-content>
