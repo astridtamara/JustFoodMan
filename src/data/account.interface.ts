@@ -1,7 +1,6 @@
 export interface Account {
   id: string;
   email: string;
-  password: string;
   name: string;
   photo: string; // url picture
   date: string;

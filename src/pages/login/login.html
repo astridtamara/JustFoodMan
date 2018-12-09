@@ -3,7 +3,44 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Ini Login</p>
-  <button ion-button (click)="onLogin()">Login</button>
-  <button ion-button (click)="onRegister()">Register</button>
+  <form [formGroup]="loginForm">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Email : </ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Password : </ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button
+          ion-button
+          col-5
+          (click)="onLogin()"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row >
+    <ion-col text-center no-padding>
+      <p>Dont have any account?<a class="regis" (click)="onRegister()"> Regis Here</a></p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center no-padding> <a class="forgot-password" (click)="forgotPassword()">Forgot your password?</a> </ion-col>
+  </ion-row>
 </ion-content>
