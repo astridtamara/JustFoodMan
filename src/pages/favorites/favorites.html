@@ -2,26 +2,50 @@
   <ion-navbar> <ion-title> Favorites</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> 
-  <ion-card *ngFor="let item of favorite | async">
-      <ion-row>
-        <img height="385" src="assets/imgs/port-five-six.jpg">
-      
-        <ion-card-content (click)="openResto()">
-          <ion-card-title>
-            {{ (favorite | async)?.name }}
-          </ion-card-title>
-          <h4>Gading Serpong, Tangerang</h4>
-          <p>
-            The most popular coffee shop in Gading Serpong.
-          </p>
-        </ion-card-content>
-      </ion-row>
-      <ion-row no-padding>
-        <button *ngIf="!isFavorite()" ion-button clear small color="yellow" (click)="change()" icon-start>
-          <ion-icon name="heart"></ion-icon>
-          Favorite
+<ion-content>
+  <ion-row *ngFor="let fav of (favorites | async)" class="resto-card">
+    <ion-col *ngIf="(fav.data | async) as data">
+      <ion-row class="slider">
+        <ion-slides
+          slidesPerView="2"
+          spaceBetween="-20"
+          (click)="openResto(data.id)"
+        >
+          <ion-slide
+            *ngFor="let photo of data.photos"
+            style="height:100px;"
+            padding
+          >
+            <img [src]="photo" class="slider-photo" />
+          </ion-slide>
+        </ion-slides>
+        <button
+          ion-button
+          clear
+          icon-only
+          color="danger"
+          class="fav-button"
+          (click)="removeFavorite(data.id)"
+        >
+          <ion-icon name="heart" class="fav-icon"></ion-icon>
         </button>
       </ion-row>
-  </ion-card>
+
+      <ion-row padding-horizontal (click)="openResto(data.id)">
+        <ion-col no-padding>
+          <span class="resto-name"> {{ data.name }} </span>
+        </ion-col>
+        <ion-col col-2 text-right no-padding>
+          <ion-icon name="star" color="secondary"> </ion-icon>
+          <span class="rating-text">5.00</span>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal (click)="openResto(data.id)">
+        <span class="resto-location">{{ data.location }}</span>
+      </ion-row>
+      <ion-row padding-horizontal (click)="openResto(data.id)">
+        <span>{{ data.description }}</span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-content>
