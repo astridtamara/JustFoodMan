@@ -2,4 +2,118 @@
   <ion-navbar> <ion-title>Edit Profile</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini edit profile orang yang login</p> </ion-content>
+<ion-content padding>
+  <form [formGroup]="profileEditForm">
+
+    <!-- <ion-row>
+      <ion-col>
+        <ion-item>
+          <p>{{ (profile | async)?.name}}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row>
+        <ion-col>
+          <ion-item>
+              
+              <img src="https://firebasestorage.googleapis.com/v0/b/justfoodman-umn.appspot.com/o/ProfilePicture%2Ftiger.jpg?alt=media&token=6ae6fb37-f810-4fb8-ad60-48dcd1c8afb0"
+                height="25%" 
+                width="25%"
+                style="position:center"
+                class="center"
+                (click)="onPictureEdit()"
+              >
+              <!-- <button
+                ion-button clear
+                col-6
+                (click)="onPictureEdit()"
+              > 
+                Change Picture
+              </button> -->
+
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Name</ion-label>
+          <ion-input type="text" formControlName="name" value="{{ (profile | async)?.name}}"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Email</ion-label>
+          <ion-input type="email" formControlName="email" value="{{ (profile | async)?.email}}"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>New Password</ion-label>
+          <ion-input type="password" formControlName="newpassword"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Confirm Password</ion-label>
+          <ion-input type="password" formControlName="confirmpassword"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-center>
+        <button
+          ion-button
+          col-12
+          (click)="onProfileEdit()"
+          [disabled]="!profileEditForm.valid"
+        >
+          Save
+        </button>
+      </ion-col>
+    </ion-row>
+    
+  </form>  
+<!-- //gini kesh, kan di database, namanya willy ganteng
+tp gw mau retrieve itu data ke input gw ga bisa -->
+    <!-- <ion-list>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input type="Password"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label stacked>New Password</ion-label>
+          <ion-input type="Password"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label stacked>Confirm Password</ion-label>
+          <ion-input type="Password"></ion-input>
+        </ion-item>
+    
+        <button ion-button full>Save</button>
+      </ion-list> -->
+     
+</ion-content>

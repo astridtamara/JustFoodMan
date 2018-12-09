@@ -14,6 +14,10 @@ import { ProfilePage } from "../pages/profile/profile";
 
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
+import { File } from "@ionic-native/file";
+import { Transfer } from "@ionic-native/transfer";
+import { FilePath } from "@ionic-native/file-path";
+import { Camera } from "@ionic-native/camera";
 
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
@@ -69,6 +73,10 @@ const firebaseConfig = {
     SplashScreen,
     AuthService,
     RestoService,
+    File,
+    Transfer,
+    Camera,
+    FilePath,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
