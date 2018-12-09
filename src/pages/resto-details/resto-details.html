@@ -1,67 +1,122 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Restaurant Details</ion-title>
-  </ion-navbar> 
-
+    <ion-title>{{ (restaurantDetail | async)?.name }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-item>
-    <!-- images -->
-    <img height="350" src="assets/imgs/port-five-six.jpg">
+<ion-content *ngIf="(restaurantDetail | async) as resto">
+  <ion-row class="resto-card">
+    <ion-col no-padding>
+      <!-- images -->
+      <ion-row class="slider">
+        <ion-slides slidesPerView="1" pager>
+          <ion-slide
+            *ngFor="let photo of resto.photos"
+            style="height:200px;"
+            padding
+          >
+            <img [src]="photo" class="slider-photo" />
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
 
-    <!-- Restaurant Name -->
-    <ion-row>      
-      <h1>{{ (restaurantDetail | async)?.name }}</h1> 
-    </ion-row>
-        
-    <!--Location -->
-    <ion-col>
-      <ion-icon name="pin"></ion-icon>
-      Gading Serpong, Tangerang
+      <!-- Restaurant Name -->
+      <ion-row class="resto-padding">
+        <span class="resto-name">{{ resto.name }}</span>
+      </ion-row>
+
+      <!-- Location -->
+      <ion-row class="resto-padding">
+        <ion-icon name="pin" class="pin-icon"> </ion-icon>
+        <span>{{ resto.location }}</span>
+      </ion-row>
+
+      <!-- description -->
+      <ion-row class="resto-padding">
+        <span>{{ resto.openHours }}</span>
+      </ion-row>
+      <ion-row class="resto-padding">
+        <span>{{ resto.telephone }}</span>
+      </ion-row>
+      <ion-row class="resto-padding">
+        <span>{{ resto.description }}</span>
+      </ion-row>
+
+      <!-- button review -->
+      <ion-row justify-content-center text-center class="resto-padding">
+        <ion-col col no-padding>
+          <button ion-button icon-start clear>
+            <ion-icon name="text"></ion-icon>
+            Reviews
+          </button>
+        </ion-col>
+        <ion-col col no-padding>
+          <button
+            *ngIf="!(resto.favorite | async) as fav"
+            ion-button
+            clear
+            color="light"
+            (click)="updateFavorite(false)"
+            icon-start
+          >
+            <ion-icon name="heart"></ion-icon>
+            Not Favorite
+          </button>
+          <button
+            *ngIf="(resto.favorite | async) as fav"
+            ion-button
+            clear
+            color="danger"
+            (click)="updateFavorite(true)"
+            icon-start
+          >
+            <ion-icon name="heart"></ion-icon>
+            Favorite
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-col>
-
-    <!-- description -->
-    <h4>{{ (restaurantDetail | async)?.address }}</h4>
-    <h4>{{ (restaurantDetail | async)?.openHours }} </h4>
-    <h4>{{ (restaurantDetail | async)?.telephone }} </h4>
-    <p>{{ (restaurantDetail | async)?.description }}</p>
-
-    <!-- button review -->
-     <ion-row>
-      <ion-col col-3>
-        <button ion-button icon-start clear>
-          <ion-icon name="text"></ion-icon>
-          Reviews
-        </button>
-      </ion-col>
-      <ion-col col-3 offset-3>
-        <button *ngIf="!favorite()" ion-button clear small color="yellow" (click)="change()" icon-start>
-          <ion-icon name="heart"></ion-icon>
-          Favorite
-        </button>
-        <button *ngIf="favorite()" ion-button clear small color="danger" (click)="change()" icon-start>
-          <ion-icon name="heart"></ion-icon>
-          Unfavorite
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-item>
+  </ion-row>
 
   <!-- reviews -->
-  <ion-card>
-    <ion-item>
-      <ion-avatar item-start>
-          <img src="assets/imgs/logo.png">
-        </ion-avatar>
-        <h2>Willy William</h2>
-    </ion-item>
-    
-    <ion-card-content>
-      <p>This is dummy review from JustFoodMan.</p>
-    </ion-card-content>
-  </ion-card>
-  <!-- End Reviews -->
-  
+  <div *ngFor="let status of (statuses | async | reverse)">
+    <ion-row
+      padding-horizontal
+      class="card"
+      *ngIf="(status.data | async) as data"
+    >
+      <ion-col col-2>
+        <img class="avatar" [src]="(status.user | async)?.photo" />
+      </ion-col>
+      <ion-col col>
+        <ion-row justify-content-between align-items-center no-padding>
+          <ion-col no-padding>
+            <span class="account-name">{{ (status.user | async)?.name }}</span>
+          </ion-col>
+          <ion-col col-2 text-right no-padding>
+            <ion-icon name="star" color="secondary"> </ion-icon>
+            <span class="rating-text"
+              >{{ convertToNumber(data.rating) }}.00</span
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="location-text">{{
+            (status.restaurant | async)?.name
+          }}</span>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="date-text">
+            {{ data.date | date: 'dd MMMM yyyy H:mm' }}
+          </span>
+        </ion-row>
+        <ion-row class="status-row">
+          <span class="status-text">
+            {{ data.description | slice: 0:200 }}
+            {{ data.description.length > 150 ? '...' : null }}
+          </span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

@@ -5,9 +5,9 @@ import {
   AngularFireList,
   AngularFireObject
 } from "angularfire2/database";
+import { Observable } from "rxjs/Observable";
 
 import { AuthService } from "../../service/AuthService";
-import { RestoService } from "../../service/RestoService";
 
 @IonicPage()
 @Component({
@@ -17,29 +17,62 @@ import { RestoService } from "../../service/RestoService";
 export class RestoDetailsPage {
   favorites: AngularFireList<any>;
 
-  restaurant: AngularFireObject<any>;
+  statusList: AngularFireList<any>;
+  statuses: Observable<any[]>;
+
+  restaurantObject: AngularFireObject<any>;
   restaurantDetail: any;
 
   currentUser: any;
 
   isFavorite: boolean = false;
-  selectedRestaurantId: any; // current Restaurant Id. diambil dari page yang klik resto detail (random, discover, favorites)
+  selectedRestaurantId: any;
 
   newFavorite: any;
-  
+
   constructor(
     public navCtrl: NavController,
-    private restoService: RestoService,
     public navParams: NavParams,
     public db: AngularFireDatabase,
     public authService: AuthService
   ) {
-    this.favorites = db.list("/favorites");
+    this.selectedRestaurantId = navParams.get("data");
+    this.restaurantObject = db.object(
+      "/restaurant/" + this.selectedRestaurantId
+    );
+    this.restaurantDetail = this.restaurantObject
+      .snapshotChanges()
+      .map(data => ({
+        ...data.payload.val(),
+        favorite: this.db
+          .object(
+            "favorites/" +
+              this.currentUser +
+              "/restaurants/" +
+              data.payload.val().id
+          )
+          .valueChanges()
+      }));
 
-    this.selectedRestaurantId = navParams.get("data"); //Terima restaurant ID dari discover/favorite
-
-    this.restaurant = db.object("/restaurant/rest_1"); // ganti jadi parameter this.selectedRestaurantId
-    this.restaurantDetail = this.restaurant.valueChanges();
+    this.statusList = this.db.list("/statuses", ref => {
+      let query = ref
+        .orderByChild("restoID")
+        .equalTo(this.selectedRestaurantId);
+      return query;
+    });
+    this.statuses = this.statusList.snapshotChanges().map(snapshots =>
+      snapshots.map(data => ({
+        data: this.db
+          .object("statuses/" + data.payload.val().id)
+          .valueChanges(), // HTML uses | async
+        user: this.db
+          .object("users/" + data.payload.val().accountID)
+          .valueChanges(),
+        restaurant: this.db
+          .object("restaurant/" + data.payload.val().restoID)
+          .valueChanges()
+      }))
+    );
   }
 
   ionViewWillEnter() {
@@ -47,38 +80,32 @@ export class RestoDetailsPage {
     console.log("ionViewDidLoad RestoDetailsPage");
   }
 
-  ionViewDidLoad() {
-    console.log(this.selectedRestaurantId);
-  }
-
-  // Display selected account
-  openAccount() {
-    this.navCtrl.push("AccountDetailsPage");
-  }
-
-  checkFavorite() {}
-
-  favorite() {
-    return this.restoService.isFavorite2();
-  }
-
-  change() {
-    if (this.restoService.isFavorite2() == false) {
-      // Favorite
-
+  updateFavorite(isFavorite: boolean) {
+    if (isFavorite) {
       this.favorites.update(
-        this.currentUser + "/restaurants/" + "rest_2", // param terakhir ganti jadi variable yang this.selectedRestaurantId
+        this.currentUser + "/restaurants/" + this.selectedRestaurantId,
         {
-          id: "rest_2" // ganti jadi this.selectedRestaurantId
+          id: this.selectedRestaurantId
         }
       );
     } else {
       // Unfavorite
       const currentFavorite = this.db.list(
-        "/favorites/" + this.currentUser + "/restaurants/" + "rest_2"
-      ); // rest_2 ganti jadi this.selectedRestaurantId
+        "/favorites/" +
+          this.currentUser +
+          "/restaurants/" +
+          this.selectedRestaurantId
+      );
       currentFavorite.remove();
     }
-    return this.restoService.change();
+  }
+
+  convertToNumber(input: any) {
+    return parseFloat(input);
+  }
+
+  // Display selected account
+  openAccount() {
+    this.navCtrl.push("AccountDetailsPage");
   }
 }

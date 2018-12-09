@@ -33,6 +33,7 @@ export class FavoritesPage {
 
   // Display selected restaurant
   openResto(restoID: string) {
+    console.log(restoID);
     this.navCtrl.push("RestoDetailsPage", { data: restoID });
   }
 

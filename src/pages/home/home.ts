@@ -45,4 +45,12 @@ export class HomePage {
   convertToNumber(input: any) {
     return parseFloat(input);
   }
+
+  openRestaurant(restoID: string) {
+    this.navCtrl.push("RestoDetailsPage", { data: restoID });
+  }
+
+  openAccount(accountID: string) {
+    this.navCtrl.push("AccountDetailsPage", { data: accountID });
+  }
 }

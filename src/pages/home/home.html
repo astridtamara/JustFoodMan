@@ -33,8 +33,12 @@
       </ion-col>
       <ion-col col>
         <ion-row justify-content-between align-items-center no-padding>
-          <ion-col no-padding>
-            <span class="account-name">{{ (status.user | async)?.name }}</span>
+          <ion-col
+            no-padding
+            *ngIf="(status.user | async) as user"
+            (click)="openRestaurant(user.id)"
+          >
+            <span class="account-name">{{ user.name }}</span>
           </ion-col>
           <ion-col col-2 text-right no-padding>
             <ion-icon name="star" color="secondary"> </ion-icon>
@@ -43,10 +47,12 @@
             >
           </ion-col>
         </ion-row>
-        <ion-row class="status-row">
-          <span class="location-text">{{
-            (status.restaurant | async)?.name
-          }}</span>
+        <ion-row
+          class="status-row"
+          *ngIf="(status.restaurant | async) as resto"
+          (click)="openRestaurant(resto.id)"
+        >
+          <span class="location-text">{{ resto.name }}</span>
         </ion-row>
         <ion-row class="status-row">
           <span class="date-text">
