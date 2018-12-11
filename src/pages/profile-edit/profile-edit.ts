@@ -1,23 +1,23 @@
 import { Component } from "@angular/core";
 import {
   IonicPage,
+  LoadingController,
+  ToastController,
   NavController,
-  NavParams,
-  UrlSerializer
+  NavParams
 } from "ionic-angular";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+
+import { ActionSheetController } from "ionic-angular";
+import { Camera, CameraOptions } from "@ionic-native/camera";
+
+import * as Firebase from "firebase/app";
+import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+import { AngularFireStorage } from "angularfire2/storage";
+
 import { AuthService } from "../../service/AuthService";
-import {
-  AngularFireDatabase,
-  AngularFireList,
-  AngularFireObject
-} from "angularfire2/database";
-import firebase from "firebase";
-import { Platform, ActionSheetController } from "ionic-angular";
-import { File } from "@ionic-native/file";
-import { Transfer, TransferObject } from "@ionic-native/transfer";
-import { FilePath } from "@ionic-native/file-path";
-import { Camera } from "@ionic-native/camera";
+import { Account } from "../../data/account.interface";
 
 @IonicPage()
 @Component({
@@ -25,63 +25,103 @@ import { Camera } from "@ionic-native/camera";
   templateUrl: "profile-edit.html"
 })
 export class ProfileEditPage {
+  loader: any;
+
   profileEditForm: FormGroup;
-  profiles: AngularFireObject<any>;
+  profileObject: AngularFireObject<any>;
   profile: any;
 
-  // tes:string="willy abc";
-  // tes2:string="willy@abc.com";
+  profileData: Account;
+
+  activeUser: any;
+
+  imgData: any = null;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public authService: AuthService,
     private camera: Camera,
-    private transfer: Transfer,
-    private file: File,
-    private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
-    public afDatabase: AngularFireDatabase
+    public afAuth: AngularFireAuth,
+    public afDatabase: AngularFireDatabase,
+    public afStore: AngularFireStorage,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController
   ) {
-    this.profiles = afDatabase.object("/users/-LT8NJlLAiospnNKQOut");
-    this.profile = this.profiles.valueChanges();
-  }
-
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ProfileEditPage");
+    this.activeUser = this.authService.getActiveUser().uid;
+    this.profileObject = this.afDatabase.object("/users/" + this.activeUser);
+    this.profile = this.profileObject.valueChanges();
   }
 
   ngOnInit() {
+    this.profileData = this.navParams.get("profile");
     this.initializeForm();
   }
 
   initializeForm() {
-    //this.profile.email = this.navParams.get('email');
-
-    console.log("initializeForm");
+    let { name, email } = this.profileData;
     this.profileEditForm = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      email: new FormControl(null, [
+      name: new FormControl(name, Validators.required),
+      email: new FormControl(email, [
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
       ]),
-      password: new FormControl(null),
-      newpassword: new FormControl(null),
-      confirmpassword: new FormControl(null)
+      password: new FormControl(null, Validators.required),
+      newpassword: new FormControl(null, Validators.required),
+      confirmpassword: new FormControl(null, Validators.required)
     });
   }
-  //kesh, nanya lg dong
+
   onProfileEdit() {
-    console.log("onProfileEdit");
-
-    var user = firebase.auth().currentUser;
-    var name, email, password;
-
+    this.uploadImage();
     const update = this.afDatabase.list("/users");
-    update.update("-LT8NJlLAiospnNKQOut", {
+    update.update(this.profileData.id, {
       name: this.profileEditForm.value.name,
       email: this.profileEditForm.value.email
     });
+  }
+
+  uploadImage() {
+    if (!this.imgData) {
+      return;
+    }
+    // Determine the path to the path users/uid
+    const filePath = "users/" + this.activeUser + "/photo.png";
+    const pic = this.afStore.storage
+      .ref(filePath)
+      .putString(this.imgData, "base64", { contentType: "image/png" });
+    pic.on(
+      Firebase.storage.TaskEvent.STATE_CHANGED,
+      snapshot => {
+        // Progress bar
+      },
+      error => {
+        this.loader.dismiss();
+      },
+      () => {
+        //Success
+        this.profileData.photo = pic.snapshot.downloadURL;
+        const update = this.afDatabase.list("/users");
+        update.update(this.profileData.id, {
+          photo: pic.snapshot.downloadURL
+        });
+      }
+    );
+  }
+
+  changePass(passwordNew) {
+    this.afAuth.auth.currentUser
+      .updatePassword(passwordNew)
+      .then(() => {
+        this.loader.dismiss();
+        this.presentToast("Password has been changed successfully");
+      })
+      .catch(e => {
+        console.log("err", e);
+        this.loader.dismiss();
+        this.presentToast(e.message);
+      });
   }
 
   onPictureEdit() {
@@ -91,24 +131,63 @@ export class ProfileEditPage {
         {
           text: "Load from Gallery",
           handler: () => {
-            console.log("Load from Gallery");
+            this.takePhoto(0);
           }
         },
         {
           text: "Use Camera",
           handler: () => {
-            console.log("Use Camera");
+            this.takePhoto(1);
           }
         },
         {
           text: "Cancel",
-          role: "cancel",
-          handler: () => {
-            console.log("Cancel clicked");
-          }
+          role: "cancel"
         }
       ]
     });
     actionSheet.present();
+  }
+
+  takePhoto(sourceType: number) {
+    this.loading();
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: sourceType
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        let base64Image = "data:image/jpeg;base64," + imageData;
+        this.profileData.photo = base64Image;
+        this.imgData = imageData;
+        this.loader.dismiss();
+      },
+      err => {
+        // Handle error
+        this.loader.dismiss();
+      }
+    );
+  }
+
+  loading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    this.loader.present();
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: "bottom"
+    });
+
+    toast.present();
   }
 }

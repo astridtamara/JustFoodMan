@@ -22,8 +22,9 @@ import { Camera } from "@ionic-native/camera";
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireStorageModule } from "angularfire2/storage";
+
 import { AuthService } from "../service/AuthService";
-import { RestoService } from "../service/RestoService";
 import { HttpModule } from "@angular/http";
 
 import { PipesModule } from "../pipes/pipes.module";
@@ -55,6 +56,7 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
     PipesModule
   ],
   bootstrap: [IonicApp],
@@ -72,7 +74,6 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AuthService,
-    RestoService,
     File,
     Transfer,
     Camera,

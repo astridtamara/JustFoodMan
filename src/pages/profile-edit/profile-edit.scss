@@ -1,3 +1,9 @@
 page-profile-edit {
-
+  .avatar {
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    border: 1px solid map-get($colors, secondary);
+    object-fit: cover;
+  }
 }

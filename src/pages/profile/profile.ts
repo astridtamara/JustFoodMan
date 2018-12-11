@@ -1,21 +1,20 @@
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { AuthService } from "../../service/AuthService";
-import {
-  AngularFireList,
-  AngularFireDatabase,
-  AngularFireObject
-} from "angularfire2/database";
-import { User } from "firebase";
+import { AngularFireDatabase, AngularFireObject } from "angularfire2/database";
+
+import { Account } from "../../data/account.interface";
 
 @Component({
   selector: "page-profile",
   templateUrl: "profile.html"
 })
 export class ProfilePage {
-  profiles: AngularFireObject<any>;
+  profileObject: AngularFireObject<any>;
   profile: any;
-  tes: string = "kluar?";
+
+  profileData: Account;
+
   activeUser: any;
 
   constructor(
@@ -23,15 +22,17 @@ export class ProfilePage {
     public authService: AuthService,
     db: AngularFireDatabase
   ) {
-    this.profiles = db.object("/users/-LT8NJlLAiospnNKQOut");
-    this.profile = this.profiles.valueChanges();
+    this.activeUser = this.authService.getActiveUser().uid;
+    this.profileObject = db.object("/users/" + this.activeUser);
+    this.profile = this.profileObject.valueChanges();
+    this.profile.subscribe(data => {
+      this.profileData = data;
+    });
   }
 
-  ionViewDidLoad() {
-    console.log(this.authService.getActiveUser());
-  }
   onEditProfile() {
-    this.navCtrl.push("ProfileEditPage");
+    console.log(this.profileData);
+    this.navCtrl.push("ProfileEditPage", { profile: this.profileData });
   }
 
   onLogOut() {
