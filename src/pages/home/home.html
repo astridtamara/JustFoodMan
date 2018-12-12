@@ -7,10 +7,10 @@
 <ion-content>
   <ion-row padding-horizontal class="card">
     <ion-col col-2>
-      <img class="avatar" src="assets/imgs/minhyun.jpg" />
+      <img class="avatar" [src]="(profile | async)?.photo" />
     </ion-col>
     <ion-col col>
-      <span class="account-name">Jacob, the Great Foodie</span> <br />
+      <span class="account-name">{{ (profile | async)?.name }}</span> <br />
       <button
         ion-button
         color="secondary"

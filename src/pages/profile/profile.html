@@ -24,19 +24,19 @@
     </ion-col>
   </ion-row>
 
-  <ion-item>
+  <ion-item padding-right>
     <ion-label>Following</ion-label>
-    <ion-label>{{ (profile | async)?.following }}</ion-label>
+    <ion-label text-right>{{ (profile | async)?.following }}</ion-label>
   </ion-item>
 
-  <ion-item>
+  <ion-item padding-right>
     <ion-label>Followers</ion-label>
-    <p>{{ (profile | async)?.followers }}</p>
+    <ion-label text-right>{{ (profile | async)?.followers }}</ion-label>
   </ion-item>
 
-  <ion-item>
+  <ion-item padding-right>
     <ion-label>Posts</ion-label>
-    <ion-label>{{ (profile | async)?.posts }}</ion-label>
+    <ion-label text-right>{{ (profile | async)?.posts }}</ion-label>
   </ion-item>
 
   <ion-row padding-horizontal align-items-center class="card">

@@ -1,9 +1,14 @@
 import { Component } from "@angular/core";
 import { ModalController, NavController } from "ionic-angular";
-import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
+import {
+  AngularFireDatabase,
+  AngularFireList,
+  AngularFireObject
+} from "angularfire2/database";
 import { Observable } from "rxjs/Observable";
 import { AuthService } from "../../service/AuthService";
 
+import { Account } from "../../data/account.interface";
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
@@ -12,12 +17,22 @@ export class HomePage {
   statusList: AngularFireList<any>;
   statuses: Observable<any[]>;
 
+  profileObject: AngularFireObject<any>;
+  profile: any;
+
+  profileData: Account;
+
+  activeUser: any;
   constructor(
     public navCtrl: NavController,
     public authService: AuthService,
     public afDatabase: AngularFireDatabase,
     public modalCtrl: ModalController
   ) {
+    this.activeUser = this.authService.getActiveUser().uid;
+    this.profileObject = afDatabase.object("/users/" + this.activeUser);
+    this.profile = this.profileObject.valueChanges();
+
     this.statusList = afDatabase.list("/statuses", ref => {
       let query = ref.orderByChild("date");
       return query;
