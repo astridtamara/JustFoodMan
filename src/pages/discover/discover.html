@@ -4,11 +4,53 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let item of (items | async)" (click)="openResto()">
-      {{ item.nama }}
-    </ion-item>
+    <ion-row *ngFor="let data of filterList" class="resto-card">
+      <ion-col>
+        <ion-row class="slider">
+          <ion-slides
+            slidesPerView="2"
+            spaceBetween="-20"
+            (click)="openResto(data.id)"
+          >
+            <ion-slide
+              *ngFor="let photo of data.photos"
+              style="height:100px;"
+              padding
+            >
+              <img [src]="photo" class="slider-photo" />
+            </ion-slide>
+          </ion-slides>
+          <button
+            ion-button
+            clear
+            icon-only
+            color="danger"
+            class="fav-button"
+            (click)="removeFavorite(data.id)"
+          >
+            <ion-icon name="heart" class="fav-icon"></ion-icon>
+          </button>
+        </ion-row>
+
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <ion-col no-padding>
+            <span class="resto-name"> {{ data.name }} </span>
+          </ion-col>
+          <ion-col col-2 text-right no-padding>
+            <ion-icon name="star" color="secondary"> </ion-icon>
+            <span class="rating-text">5.00</span>
+          </ion-col>
+        </ion-row>
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <span class="resto-location">{{ data.location }}</span>
+        </ion-row>
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <span>{{ data.description }}</span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
   </ion-list>
 </ion-content>

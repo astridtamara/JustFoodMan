@@ -2,33 +2,40 @@ import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 
+import { Restaurant } from "../../data/restaurant.interface";
+
 @Component({
   selector: "page-discover",
   templateUrl: "discover.html"
 })
 export class DiscoverPage {
+  searchQuery: string = "";
+  resturantList: AngularFireList<any>;
+  restaurants: any;
 
-  searchQuery: string = '';
-  itemList: AngularFireList<any> ;
-  items: any;
+  searchList: Restaurant[];
+  filterList: Restaurant[];
 
-  constructor(public navCtrl: NavController, public afDatabase: AngularFireDatabase) {
-    this.itemList = afDatabase.list("/restaurant");
-    this.items = this.itemList.valueChanges();
+  constructor(
+    public navCtrl: NavController,
+    public afDatabase: AngularFireDatabase
+  ) {
+    this.resturantList = afDatabase.list("/restaurant");
+    this.restaurants = this.resturantList.valueChanges().subscribe(data => {
+      this.searchList = data;
+      this.filterList = data;
+    });
   }
 
   getItems(ev: any) {
-    // Reset items back to all of the items
-    
-
-    // set val to the value of the searchbar
     const val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+    if (val && val.trim() != "") {
+      this.filterList = this.searchList.filter(item => {
+        return item.name.toLowerCase().indexOf(val.toLowerCase()) > -1;
+      });
+    } else {
+      this.filterList = this.searchList;
     }
   }
 

@@ -52,7 +52,10 @@ $colors: (
 $toolbar-md-title-text-color: map-get($colors, main);
 $toolbar-ios-title-text-color: map-get($colors, main);
 $toolbar-wp-title-text-color: map-get($colors, main);
+
 $text-color: map-get($colors, main);
+
+$searchbar-ios-background-color: map-get($colors, light);
 
 // App iOS Variables
 // --------------------------------------------------
