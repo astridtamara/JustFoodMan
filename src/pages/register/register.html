@@ -1,42 +1,65 @@
-<ion-header>
-  <ion-navbar> <ion-title>Register</ion-title> </ion-navbar>
-</ion-header>
+<ion-header> </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-row text-center class="margin-top" padding-horizontal>
+    <ion-col><h1 no-margin ion-text color="primary">Register</h1> </ion-col>
+  </ion-row>
   <form [formGroup]="registerForm">
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Nama : </ion-label>
-          <ion-input type="text" formControlName="nama"></ion-input>
-        </ion-item>
+    <div class="white-bg">
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Nama </ion-label>
+            <ion-input type="text" formControlName="nama"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Email </ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Password </ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Confirm Password </ion-label>
+            <ion-input
+              type="password"
+              formControlName="confirmPassword"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row padding-horizontal>
+      <ion-col text-center>
+        <button ion-button block round color="light" (click)="onBack()">
+          Back to Login
+        </button>
       </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Email : </ion-label>
-          <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Password : </ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
       <ion-col text-center>
         <button
           ion-button
           block
           round
+          color="secondary"
           (click)="onRegister()"
-          [disabled]="!registerForm.valid"
+          [disabled]="
+            !registerForm.valid &&
+            registerForm.controls.password.value !==
+              registerForm.controls.confirmPassword.value
+          "
         >
           Register
         </button>

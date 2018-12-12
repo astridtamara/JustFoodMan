@@ -1,42 +1,51 @@
-<ion-header>
-  <ion-navbar> <ion-title>Login</ion-title> </ion-navbar>
-</ion-header>
+<ion-header> </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-row align-items-center justify-content-center>
+    <ion-col text-center>
+      <img class="logo" src="assets/imgs/icon.png" />
+    </ion-col>
+  </ion-row>
+  <ion-row text-center padding-horizontal>
+    <ion-col><h1 ion-text no-margin color="primary">Login</h1> </ion-col>
+  </ion-row>
   <form [formGroup]="loginForm">
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Email : </ion-label>
-          <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <div class="white-bg">
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Email </ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label>Password : </ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-center>
-        <button
-          ion-button
-          block
-          round
-          (click)="onLogin()"
-          [disabled]="!loginForm.valid"
-        >
-          Login
-        </button>
-      </ion-col>
-    </ion-row>
+      <ion-row padding-horizontal>
+        <ion-col>
+          <ion-item padding-right>
+            <ion-label floating>Password </ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <ion-col text-center>
+          <button
+            ion-button
+            block
+            round
+            color="secondary"
+            (click)="onLogin()"
+            [disabled]="!loginForm.valid"
+          >
+            Login
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
   </form>
 
-  <ion-row>
+  <ion-row padding-horizontal>
     <ion-col text-center no-padding>
       <p>
         Dont have any account?<a class="regis" (click)="onRegister()">
@@ -45,7 +54,7 @@
       </p>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row padding-horizontal>
     <ion-col text-center no-padding>
       <a class="forgot-password" (click)="onForgotPassword()"
         >Forgot your password?</a

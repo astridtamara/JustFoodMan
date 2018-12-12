@@ -4,6 +4,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from "../../service/AuthService";
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 
+import { LoginPage } from "../login/login";
+
 @IonicPage()
 @Component({
   selector: "page-register",
@@ -39,8 +41,13 @@ export class RegisterPage {
         Validators.required,
         Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
       ]),
-      password: new FormControl(null, Validators.required)
+      password: new FormControl(null, Validators.required),
+      confirmPassword: new FormControl(null, Validators.required)
     });
+  }
+
+  onBack() {
+    this.navCtrl.setRoot(LoginPage);
   }
 
   onRegister() {
@@ -49,23 +56,19 @@ export class RegisterPage {
       this.registerForm.value.password
     );
     regis.then(() => {
-      this.authService
-        .getActiveUser()
-        .getIdToken()
-        .then((token: string) => {
-          const newUsers = this.usersList.push({});
+      let uid = this.authService.getActiveUser().uid;
 
-          newUsers.set({
-            id: newUsers.key,
-            email: this.registerForm.value.email,
-            name: this.registerForm.value.nama,
-            photo: "", // url picture
-            date: "",
-            following: [], // string id account
-            follower: [], // string id account
-            favorites: [] // string id resto
-          });
-        });
+      this.usersList.update(uid, {
+        id: uid,
+        email: this.registerForm.value.email,
+        name: this.registerForm.value.nama,
+        photo:
+          "https://firebasestorage.googleapis.com/v0/b/justfoodman-umn.appspot.com/o/user-profile-picture.jpg?alt=media&token=3298f8f8-5a62-41db-b8d8-81bda52cf8f0", // url picture
+        date: new Date().toISOString(),
+        following: 0, // string id account
+        followers: 0, // string id account
+        posts: 0 // string id resto
+      });
     });
     regis.catch(function(error) {
       alert(error);

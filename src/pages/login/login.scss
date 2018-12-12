@@ -1,5 +1,21 @@
 page-login {
+  .white-bg {
+    padding: 8px 0;
+  }
+
+  .logo {
+    margin-top: 5vh;
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+  }
+
   .forgot-password {
     color: map-get($colors, primary);
+  }
+
+  .margin-top {
+    margin-top: 20vh;
+    margin-bottom: 8px;
   }
 }
