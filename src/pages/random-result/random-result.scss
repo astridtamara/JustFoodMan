@@ -1,3 +1,36 @@
 page-random-result {
-
+  .resto-card {
+    padding: 8px 0px;
+    border-bottom: 12px solid map-get($colors, shadow) !important;
+  }
+  .photo {
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  .num-resto {
+    color: map-get($colors, secondary);
+  }
+  .resto-name {
+    font-size: 1.6rem;
+    color: map-get($colors, primary);
+    margin-bottom: 2px;
+  }
+  .resto-location {
+    text-decoration: underline;
+    color: map-get($colors, secondary);
+    margin-bottom: 4px;
+  }
+  .rating-text {
+    color: map-get($colors, secondary);
+  }
+  .fav-button {
+    position: absolute;
+    top: 6px;
+    right: 13px;
+    z-index: 3;
+  }
+  .fav-icon {
+    text-shadow: -1.25px 0 #fff, 0 1.25px #fff, 1.25px 0 #fff, 0 -1.25px #fff;
+  }
 }

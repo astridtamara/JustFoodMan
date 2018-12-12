@@ -2,4 +2,72 @@
   <ion-navbar> <ion-title>Random Result</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini page buat tampilin hasil random</p> </ion-content>
+<ion-content>
+  <ion-row
+    class="resto-card"
+    align-items-center
+    justify-content-center
+    text-center
+    padding-horizontal
+  >
+    <ion-col> <h4>Random Process has selected ...</h4> </ion-col>
+  </ion-row>
+  <ion-row class="resto-card">
+    <ion-col>
+      <ion-row class="slider">
+        <ion-slides slidesPerView="2" spaceBetween="-20">
+          <ion-slide
+            *ngFor="let photo of data.photos"
+            style="height:100px;"
+            padding
+          >
+            <img [src]="photo" class="slider-photo" />
+          </ion-slide>
+        </ion-slides>
+        <button
+          *ngIf="!(data.isFavorite | async)"
+          ion-button
+          clear
+          icon-only
+          color="danger"
+          class="fav-button"
+          (click)="addFavorite(data.id)"
+        >
+          <ion-icon name="heart-outline" class="fav-icon"></ion-icon>
+        </button>
+        <button
+          *ngIf="(data.isFavorite | async)"
+          ion-button
+          clear
+          icon-only
+          color="danger"
+          class="fav-button"
+          (click)="removeFavorite(data.id)"
+        >
+          <ion-icon name="heart" class="fav-icon"></ion-icon>
+        </button>
+      </ion-row>
+
+      <ion-row padding-horizontal>
+        <ion-col no-padding>
+          <span class="resto-name"> {{ data.name }} </span>
+        </ion-col>
+        <ion-col col-2 text-right no-padding>
+          <ion-icon name="star" color="secondary"> </ion-icon>
+          <span class="rating-text">5.00</span>
+        </ion-col>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <span class="resto-location">{{ data.location }}</span>
+      </ion-row>
+      <ion-row padding-horizontal>
+        <span>{{ data.description }}</span>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row padding-horizontal margin-top>
+    <button ion-button round block (click)="openResto()">
+      Go To This Restaurant
+    </button>
+  </ion-row>
+</ion-content>

@@ -4,6 +4,87 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content> 
-
+<ion-content>
+  <ion-list>
+    <ion-row
+      class="resto-card"
+      align-items-center
+      justify-content-center
+      text-center
+      padding-horizontal
+    >
+      <ion-row>
+        <ion-col>
+          <ion-icon name="walk"></ion-icon>
+          <span>
+            Randoming from
+            <span class="num-resto">{{ totalRestaurants }}</span> nearby
+            restaurants
+          </span>
+          <ion-icon name="walk"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span
+            >Click <ion-icon name="play" color="secondary"></ion-icon> to
+            start!</span
+          >
+        </ion-col>
+      </ion-row>
+    </ion-row>
+    <ion-row
+      *ngFor="let data of filterList"
+      class="resto-card"
+      align-items-center
+    >
+      <ion-col col-4 padding-left>
+        <img [src]="data.photos[0]" class="photo" />
+        <button
+          *ngIf="!(data.isFavorite | async)"
+          ion-button
+          clear
+          icon-only
+          color="danger"
+          class="fav-button"
+          (click)="addFavorite(data.id)"
+        >
+          <ion-icon name="heart-outline" class="fav-icon"></ion-icon>
+        </button>
+        <button
+          *ngIf="(data.isFavorite | async)"
+          ion-button
+          clear
+          icon-only
+          color="danger"
+          class="fav-button"
+          (click)="removeFavorite(data.id)"
+        >
+          <ion-icon name="heart" class="fav-icon"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <ion-col no-padding>
+            <span class="resto-name"> {{ data.name }} </span>
+          </ion-col>
+          <ion-col col-3 text-right no-padding>
+            <ion-icon name="star" color="secondary"> </ion-icon>
+            <span class="rating-text">5.00</span>
+          </ion-col>
+        </ion-row>
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <span class="resto-location">{{ data.location }}</span>
+        </ion-row>
+        <ion-row padding-horizontal (click)="openResto(data.id)">
+          <span>{{ data.description }}</span>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab color="secondary" (click)="onRandomStart()">
+      <ion-icon name="play"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
