@@ -11,10 +11,8 @@ import { FavoritesPage } from "../pages/favorites/favorites";
 import { DiscoverPage } from "../pages/discover/discover";
 import { RandomPage } from "../pages/random/random";
 import { ProfilePage } from "../pages/profile/profile";
-import { PlacePage } from '../pages/place/place';
-import { AddPlacePage } from '../pages/add-place/add-place';
-import { SetLocationPage } from '../pages/set-location/set-location';
-import { Geolocation } from '@ionic-native/geolocation';
+
+import { Geolocation } from "@ionic-native/geolocation";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { File } from "@ionic-native/file";
@@ -32,8 +30,8 @@ import { AuthService } from "../service/AuthService";
 import { HttpModule } from "@angular/http";
 
 import { PipesModule } from "../pipes/pipes.module";
-import { AgmCoreModule } from '@agm/core';
-import { PlacesProvider } from "../pages/providers/places";
+import { AgmCoreModule } from "@agm/core";
+import { PlacesProvider } from "../providers/places";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
@@ -53,9 +51,6 @@ const firebaseConfig = {
     FavoritesPage,
     DiscoverPage,
     RandomPage,
-    PlacePage,
-    AddPlacePage,
-    SetLocationPage,
     ProfilePage
   ],
   imports: [
@@ -66,11 +61,11 @@ const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    IonicStorageModule.forRoot(),
     PipesModule,
-    AgmCoreModule
-    .forRoot({
-      apiKey: 'AIzaSyCeMv3KgLfLn5SXcvwLW-9w4F7VKn8hOfA'
-    }),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCeMv3KgLfLn5SXcvwLW-9w4F7VKn8hOfA"
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,19 +76,18 @@ const firebaseConfig = {
     FavoritesPage,
     DiscoverPage,
     RandomPage,
-    PlacePage,
-    AddPlacePage,
     ProfilePage
-    Geolocation,
-    File,
+  ],
+  providers: [
     StatusBar,
     SplashScreen,
     AuthService,
+    Geolocation,
     File,
     Transfer,
     Camera,
     FilePath,
-   PlacesProvider,
+    PlacesProvider,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

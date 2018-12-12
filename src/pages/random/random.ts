@@ -1,31 +1,38 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, LoadingController, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
-import { SetLocationPage } from '../set-location/set-location';
-import { Location } from '../models/location';
-import { Geolocation } from '@ionic-native/geolocation';
-import { normalizeURL } from 'ionic-angular';
-import { PlacesProvider } from '../providers/places';
-import { File, FileError, Entry } from '@ionic-native/file';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ModalController,
+  LoadingController,
+  ToastController
+} from "ionic-angular";
+import { NgForm } from "@angular/forms";
+import { SetLocationPage } from "../set-location/set-location";
+import { Location } from "../../models/location";
+import { Geolocation } from "@ionic-native/geolocation";
+import { normalizeURL } from "ionic-angular";
+import { PlacesProvider } from "../../providers/places";
+import { File, FileError, Entry } from "@ionic-native/file";
 
+import { Place } from "../../models/place";
 declare var cordova: any;
-
 
 @IonicPage()
 @Component({
-  selector: 'page-random',
-  templateUrl: 'random.html',
+  selector: "page-random",
+  templateUrl: "random.html"
 })
 export class RandomPage {
-
+  places: Place[];
   location: Location = {
     lat: 40.7624,
     long: -73.97598
-  }
+  };
 
   locationIsSet = false;
 
-  imageURL = '';
+  imageURL = "";
 
   constructor(
     public navCtrl: NavController,
@@ -36,33 +43,39 @@ export class RandomPage {
     private toastCtrl: ToastController,
     private placesProvider: PlacesProvider,
     private file: File
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPlacePage');
+    console.log("ionViewDidLoad AddPlacePage");
   }
 
   onSubmit(form: NgForm) {
     this.placesProvider.addPlace(
-      form.value.title, form.value.description, this.location, this.imageURL
+      form.value.title,
+      form.value.description,
+      this.location,
+      this.imageURL
     );
     form.reset();
     this.location = {
       lat: 40.7624,
       long: -73.97598
     };
-    this.imageURL = '';
+    this.imageURL = "";
     this.locationIsSet = false;
   }
 
   onOpenMap() {
     var modal = null;
     if (this.locationIsSet) {
-      modal = this.modalCtrl.create(SetLocationPage, { location: this.location, marker: this.location });
-    }
-    else {
-      modal = this.modalCtrl.create(SetLocationPage, { location: this.location });
+      modal = this.modalCtrl.create("SetLocationPage", {
+        location: this.location,
+        marker: this.location
+      });
+    } else {
+      modal = this.modalCtrl.create("SetLocationPage", {
+        location: this.location
+      });
     }
 
     modal.present();
@@ -76,12 +89,13 @@ export class RandomPage {
 
   onLocate() {
     const loader = this.loadingCtrl.create({
-      content: 'Getting your locaton...'
+      content: "Getting your locaton..."
     });
 
     loader.present();
 
-    this.geoLocation.getCurrentPosition()
+    this.geoLocation
+      .getCurrentPosition()
       .then(location => {
         loader.dismiss();
         this.location.lat = location.coords.latitude;
@@ -90,25 +104,27 @@ export class RandomPage {
       })
       .catch(error => {
         loader.dismiss();
-        this.toastCtrl.create({
-          message: 'Could not get location',
-          duration: 2500
-        }).present();
+        this.toastCtrl
+          .create({
+            message: "Could not get location",
+            duration: 2500
+          })
+          .present();
         console.log(error);
       });
-
   }
 
-
-  onOpenPlace(place: Place, index: number){
-    const modal = this.modalCtrl.create(PlacePage, {place: place, index: index});
+  onOpenPlace(place: Place, index: number) {
+    const modal = this.modalCtrl.create("PlacePage", {
+      place: place,
+      index: index
+    });
     modal.present();
 
     modal.onDidDismiss(() => {
       this.places = this.placesProvider.loadPlaces();
     });
-    
+
     //TODO: reload places after modal dismiss
   }
-
-} 
+}

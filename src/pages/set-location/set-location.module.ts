@@ -1,17 +1,10 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-<<<<<<< HEAD
-import { SetLocationPage } from './set-location';
-=======
-import { SetLocationPage } from '../set-location';
->>>>>>> random, select page, yang branch veronika2 gak bisa di push
+import { NgModule } from "@angular/core";
+import { IonicPageModule } from "ionic-angular";
+import { SetLocationPage } from "./set-location";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
-  declarations: [
-    SetLocationPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(SetLocationPage),
-  ],
+  declarations: [SetLocationPage],
+  imports: [IonicPageModule.forChild(SetLocationPage), AgmCoreModule]
 })
 export class SetLocationPageModule {}
