@@ -15,7 +15,7 @@ import { AuthService } from "../../service/AuthService";
   templateUrl: "resto-details.html"
 })
 export class RestoDetailsPage {
-  favorites: AngularFireList<any>;
+  favoriteList: AngularFireList<any>;
 
   statusList: AngularFireList<any>;
   statuses: Observable<any[]>;
@@ -36,6 +36,7 @@ export class RestoDetailsPage {
     public db: AngularFireDatabase,
     public authService: AuthService
   ) {
+    this.currentUser = this.authService.getActiveUser().uid;
     this.selectedRestaurantId = navParams.get("data");
     this.restaurantObject = db.object(
       "/restaurant/" + this.selectedRestaurantId
@@ -49,7 +50,7 @@ export class RestoDetailsPage {
             "favorites/" +
               this.currentUser +
               "/restaurants/" +
-              data.payload.val().id
+              this.selectedRestaurantId
           )
           .valueChanges()
       }));
@@ -73,31 +74,20 @@ export class RestoDetailsPage {
           .valueChanges()
       }))
     );
+
+    this.favoriteList = this.db.list(
+      "/favorites/" + this.currentUser + "/restaurants"
+    );
   }
 
-  ionViewWillEnter() {
-    this.currentUser = this.authService.getActiveUser().uid;
-    console.log("ionViewDidLoad RestoDetailsPage");
+  addFavorite() {
+    this.favoriteList.update(this.selectedRestaurantId, {
+      id: this.selectedRestaurantId
+    });
   }
 
-  updateFavorite(isFavorite: boolean) {
-    if (isFavorite) {
-      this.favorites.update(
-        this.currentUser + "/restaurants/" + this.selectedRestaurantId,
-        {
-          id: this.selectedRestaurantId
-        }
-      );
-    } else {
-      // Unfavorite
-      const currentFavorite = this.db.list(
-        "/favorites/" +
-          this.currentUser +
-          "/restaurants/" +
-          this.selectedRestaurantId
-      );
-      currentFavorite.remove();
-    }
+  removeFavorite() {
+    this.favoriteList.remove(this.selectedRestaurantId);
   }
 
   convertToNumber(input: any) {

@@ -52,26 +52,26 @@
         </ion-col>
         <ion-col col no-padding>
           <button
-            *ngIf="!(resto.favorite | async) as fav"
-            ion-button
-            clear
-            color="light"
-            (click)="updateFavorite(false)"
-            icon-start
-          >
-            <ion-icon name="heart"></ion-icon>
-            Not Favorite
-          </button>
-          <button
-            *ngIf="(resto.favorite | async) as fav"
+            *ngIf="!(resto.favorite | async)"
             ion-button
             clear
             color="danger"
-            (click)="updateFavorite(true)"
+            (click)="addFavorite()"
+            icon-start
+          >
+            <ion-icon name="heart-outline"></ion-icon>
+            Add to Favorite
+          </button>
+          <button
+            *ngIf="(resto.favorite | async)"
+            ion-button
+            clear
+            color="danger"
+            (click)="removeFavorite()"
             icon-start
           >
             <ion-icon name="heart"></ion-icon>
-            Favorite
+            Remove Favorite
           </button>
         </ion-col>
       </ion-row>

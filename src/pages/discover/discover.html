@@ -24,6 +24,18 @@
             </ion-slide>
           </ion-slides>
           <button
+            *ngIf="!(data.isFavorite | async)"
+            ion-button
+            clear
+            icon-only
+            color="danger"
+            class="fav-button"
+            (click)="addFavorite(data.id)"
+          >
+            <ion-icon name="heart-outline" class="fav-icon"></ion-icon>
+          </button>
+          <button
+            *ngIf="(data.isFavorite | async)"
             ion-button
             clear
             icon-only
