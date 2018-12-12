@@ -20,8 +20,8 @@ declare var cordova: any;
 
 @IonicPage()
 @Component({
-  selector: "page-random",
-  templateUrl: "random.html"
+  selector: "page-random-map",
+  templateUrl: "random-map.html"
 })
 export class RandomMapPage {
   places: Place[];

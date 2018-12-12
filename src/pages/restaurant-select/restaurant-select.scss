@@ -1,0 +1,6 @@
+page-restaurant-select {
+  .active {
+    color: map-get($colors, secondary);
+    font-weight: bold;
+  }
+}

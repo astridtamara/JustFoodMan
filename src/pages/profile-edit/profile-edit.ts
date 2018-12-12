@@ -4,11 +4,11 @@ import {
   LoadingController,
   ToastController,
   NavController,
+  ActionSheetController,
   NavParams
 } from "ionic-angular";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
-import { ActionSheetController } from "ionic-angular";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 
 import * as Firebase from "firebase/app";
@@ -74,40 +74,11 @@ export class ProfileEditPage {
   }
 
   onProfileEdit() {
-    this.uploadImage();
     const update = this.afDatabase.list("/users");
     update.update(this.profileData.id, {
       name: this.profileEditForm.value.name,
       email: this.profileEditForm.value.email
     });
-  }
-
-  uploadImage() {
-    if (!this.imgData) {
-      return;
-    }
-    // Determine the path to the path users/uid
-    const filePath = "users/" + this.activeUser + "/photo.png";
-    const pic = this.afStore.storage
-      .ref(filePath)
-      .putString(this.imgData, "base64", { contentType: "image/png" });
-    pic.on(
-      Firebase.storage.TaskEvent.STATE_CHANGED,
-      snapshot => {
-        // Progress bar
-      },
-      error => {
-        this.loader.dismiss();
-      },
-      () => {
-        //Success
-        this.profileData.photo = pic.snapshot.downloadURL;
-        const update = this.afDatabase.list("/users");
-        update.update(this.profileData.id, {
-          photo: pic.snapshot.downloadURL
-        });
-      }
-    );
   }
 
   changePass(passwordNew) {
@@ -165,10 +136,41 @@ export class ProfileEditPage {
         let base64Image = "data:image/jpeg;base64," + imageData;
         this.profileData.photo = base64Image;
         this.imgData = imageData;
+
         this.loader.dismiss();
+        this.uploadImage();
       },
       err => {
         // Handle error
+        this.loader.dismiss();
+      }
+    );
+  }
+
+  uploadImage() {
+    if (!this.imgData) {
+      return;
+    }
+    // Determine the path to the path users/uid
+    const filePath = "users/" + this.activeUser + "/photo.png";
+    const pic = this.afStore.storage
+      .ref(filePath)
+      .putString(this.imgData, "base64", { contentType: "image/png" });
+    pic.on(
+      Firebase.storage.TaskEvent.STATE_CHANGED,
+      snapshot => {
+        // Progress bar
+      },
+      error => {
+        this.loader.dismiss();
+      },
+      () => {
+        //Success
+        this.profileData.photo = pic.snapshot.downloadURL;
+        const update = this.afDatabase.list("/users");
+        update.update(this.profileData.id, {
+          photo: pic.snapshot.downloadURL
+        });
         this.loader.dismiss();
       }
     );

@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar> <ion-title>Select Restaurant</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    (ionInput)="getItems($event)"
+    placeholder="Discover restaurant by name..."
+  ></ion-searchbar>
+  <button
+    padding-horizontal
+    ion-button
+    round
+    block
+    small
+    color="secondary"
+    (click)="selectResto()"
+  >
+    Select
+  </button>
+  <ion-list padding-horizontal>
+    <ion-item
+      padding-right
+      *ngFor="let resto of filterList"
+      (click)="changeSelected(resto.id, resto.name)"
+    >
+      <span *ngIf="resto.id === selectedResto.id" class="active">{{
+        resto.name
+      }}</span>
+      <span *ngIf="resto.id !== selectedResto.id">{{ resto.name }}</span>
+    </ion-item>
+  </ion-list>
+</ion-content>

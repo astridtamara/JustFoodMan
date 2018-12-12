@@ -5,27 +5,29 @@
 <ion-content padding>
   <ion-row padding-horizontal class="card">
     <ion-col col-2>
-      <img class="avatar" src="assets/imgs/minhyun.jpg" />
+      <img class="avatar" [src]="(profile | async)?.photo" />
     </ion-col>
     <ion-col col>
       <ion-row>
-        <span class="account-name">Jacob, the Great Foodie</span>
+        <span class="account-name">{{ (profile | async)?.name }}</span>
       </ion-row>
       <ion-row>
-        <span class="title-text ">Let the world hears what you gotta say.</span>
+        <span class="title-text "
+          >Let the world hears your golden thought.</span
+        >
       </ion-row>
     </ion-col>
   </ion-row>
   <form [formGroup]="reviewForm">
     <ion-row>
       <ion-col>
-        <ion-item>
+        <ion-item padding-right>
           <ion-label color="primary" stacked>Restaurant</ion-label>
           <ion-input
-            class="hidden"
             type="text"
             formControlName="restaurant"
             placeholder="Where did you have your yum yum?"
+            (click)="openRestaurantSelect()"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -33,7 +35,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item no-lines>
+        <ion-item no-lines padding-right>
           <ion-label color="primary" stacked>Rating</ion-label>
           <ion-input type="hidden" formControlName="rating"></ion-input>
         </ion-item>
@@ -102,7 +104,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item>
+        <ion-item padding-right>
           <ion-label color="primary" stacked>Review</ion-label>
           <ion-textarea
             type="text"
@@ -115,14 +117,25 @@
       </ion-col>
     </ion-row>
 
+    <ion-row justify-content-center align-items-center>
+      <ion-col col-6 text-center>
+        <img *ngIf="photoURL !== null" [src]="photoURL" />
+        <button ion-button outline round (click)="onPictureEdit()">
+          Upload Picture
+        </button>
+      </ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col text-center>
-        <button ion-button col-5 color="light" (click)="onCancel()">
+        <button ion-button round col-5 color="light" (click)="onCancel()">
           Cancel
         </button>
         <button
           ion-button
           col-5
+          round
+          color="secondary"
           (click)="onSubmit()"
           [disabled]="!reviewForm.valid"
         >
