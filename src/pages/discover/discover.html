@@ -2,4 +2,11 @@
   <ion-navbar> <ion-title> Discover </ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <p>Ini search resto</p> </ion-content>
+<ion-content padding>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of items | async" (click)="openResto()">
+      {{ item.nama }}
+    </ion-item>
+  </ion-list>
+</ion-content>
