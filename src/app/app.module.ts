@@ -12,12 +12,14 @@ import { DiscoverPage } from "../pages/discover/discover";
 import { RandomPage } from "../pages/random/random";
 import { ProfilePage } from "../pages/profile/profile";
 
+import { Geolocation } from "@ionic-native/geolocation";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { File } from "@ionic-native/file";
 import { Transfer } from "@ionic-native/transfer";
 import { FilePath } from "@ionic-native/file-path";
 import { Camera } from "@ionic-native/camera";
+import { IonicStorageModule } from "@ionic/storage";
 
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
@@ -28,6 +30,8 @@ import { AuthService } from "../service/AuthService";
 import { HttpModule } from "@angular/http";
 
 import { PipesModule } from "../pipes/pipes.module";
+import { AgmCoreModule } from "@agm/core";
+import { PlacesProvider } from "../providers/places";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBzyDTUM6D1Wh-LujHi06ZDPvm3KLJ45n0",
@@ -57,7 +61,11 @@ const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    PipesModule
+    IonicStorageModule.forRoot(),
+    PipesModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCeMv3KgLfLn5SXcvwLW-9w4F7VKn8hOfA"
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,10 +82,12 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AuthService,
+    Geolocation,
     File,
     Transfer,
     Camera,
     FilePath,
+    PlacesProvider,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
