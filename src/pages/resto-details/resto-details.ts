@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  ModalController,
+  NavController,
+  NavParams
+} from "ionic-angular";
 import {
   AngularFireDatabase,
   AngularFireList,
@@ -26,7 +31,8 @@ export class RestoDetailsPage {
   currentUser: any;
 
   isFavorite: boolean = false;
-  selectedRestaurantId: any;
+  selectedRestaurantId: string;
+  selectedRestaurantName: string;
 
   newFavorite: any;
 
@@ -34,7 +40,8 @@ export class RestoDetailsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public db: AngularFireDatabase,
-    public authService: AuthService
+    public authService: AuthService,
+    public modalCtrl: ModalController
   ) {
     this.currentUser = this.authService.getActiveUser().uid;
     this.selectedRestaurantId = navParams.get("data");
@@ -43,17 +50,20 @@ export class RestoDetailsPage {
     );
     this.restaurantDetail = this.restaurantObject
       .snapshotChanges()
-      .map(data => ({
-        ...data.payload.val(),
-        favorite: this.db
-          .object(
-            "favorites/" +
-              this.currentUser +
-              "/restaurants/" +
-              this.selectedRestaurantId
-          )
-          .valueChanges()
-      }));
+      .map(data => {
+        this.selectedRestaurantName = data.payload.val().name;
+        return {
+          ...data.payload.val(),
+          favorite: this.db
+            .object(
+              "favorites/" +
+                this.currentUser +
+                "/restaurants/" +
+                this.selectedRestaurantId
+            )
+            .valueChanges()
+        };
+      });
 
     this.statusList = this.db.list("/statuses", ref => {
       let query = ref
@@ -88,6 +98,17 @@ export class RestoDetailsPage {
 
   removeFavorite() {
     this.favoriteList.remove(this.selectedRestaurantId);
+  }
+
+  createStatus() {
+    let resto = {
+      id: this.selectedRestaurantId,
+      name: this.selectedRestaurantName
+    };
+    let profileModal = this.modalCtrl.create("CreateStatusPage", {
+      resto
+    });
+    profileModal.present();
   }
 
   convertToNumber(input: any) {

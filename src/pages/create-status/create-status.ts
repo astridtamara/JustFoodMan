@@ -81,7 +81,7 @@ export class CreateStatusPage {
 
   initializeForm() {
     this.reviewForm = new FormGroup({
-      restaurant: new FormControl(this.resto.id, Validators.required),
+      restaurant: new FormControl(this.resto.name, Validators.required),
       rating: new FormControl(1, Validators.required),
       review: new FormControl(null, Validators.required)
     });
@@ -108,14 +108,14 @@ export class CreateStatusPage {
 
     // increase total point
     this.afDatabase
-      .object("restaurant/" + data.restaurant + "/totalPoint")
+      .object("restaurant/" + this.resto.id + "/totalPoint")
       .query.ref.transaction(balance => {
         return (balance += data.rating);
       });
 
     // increase total post
     this.afDatabase
-      .object("restaurant/" + data.restaurant + "/totalPost")
+      .object("restaurant/" + this.resto.id + "/totalPost")
       .query.ref.transaction(balance => {
         return (balance += 1);
       });
