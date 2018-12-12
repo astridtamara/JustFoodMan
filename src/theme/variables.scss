@@ -5,6 +5,15 @@
 // roboto, and noto sans fonts
 $font-path: '../assets/fonts';
 
+@font-face {
+  font-family: AppFont;
+  src: url('../assets/fonts/Quicksand/Quicksand-Medium.ttf');
+}
+
+$font-family-ios-base: 'AppFont';
+$font-family-md-base: 'AppFont';
+$font-family-wp-base: 'AppFont';
+
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
