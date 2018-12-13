@@ -47,4 +47,8 @@ export class RandomResultPage {
   openResto() {
     this.navCtrl.push("RestoDetailsPage", { data: this.data.id });
   }
+
+  parseScore(totalPoint, totalPost) {
+    return (parseFloat(totalPoint) / parseFloat(totalPost)).toFixed(2);
+  }
 }

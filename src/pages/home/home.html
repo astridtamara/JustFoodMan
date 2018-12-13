@@ -67,6 +67,9 @@
             {{ data.description.length > 150 ? '...' : null }}
           </span>
         </ion-row>
+        <ion-row class="preview-row" *ngIf="data.photo">
+          <img class="preview" [src]="data.photo" />
+        </ion-row>
       </ion-col>
     </ion-row>
   </div>

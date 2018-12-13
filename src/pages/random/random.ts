@@ -100,4 +100,8 @@ export class RandomPage {
       data: this.filterList[random]
     });
   }
+
+  parseScore(totalPoint, totalPost) {
+    return (parseFloat(totalPoint) / parseFloat(totalPost)).toFixed(2);
+  }
 }

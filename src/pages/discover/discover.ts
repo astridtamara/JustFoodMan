@@ -81,4 +81,8 @@ export class DiscoverPage {
   removeFavorite(restoID: string) {
     this.favoriteList.remove(restoID);
   }
+
+  parseScore(totalPoint, totalPost) {
+    return (parseFloat(totalPoint) / parseFloat(totalPost)).toFixed(2);
+  }
 }

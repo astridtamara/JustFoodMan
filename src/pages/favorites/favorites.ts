@@ -10,7 +10,7 @@ import { AuthService } from "../../service/AuthService";
 export class FavoritesPage {
   favoriteList: AngularFireList<any>;
   favorites: any;
-  currentUser: any;
+  currentUser: string;
 
   constructor(
     public afDatabase: AngularFireDatabase,
@@ -39,5 +39,9 @@ export class FavoritesPage {
 
   removeFavorite(restoID: string) {
     this.favoriteList.remove(restoID);
+  }
+
+  convertToNumber(totalPoint, totalPost) {
+    return (parseFloat(totalPoint) / parseFloat(totalPost)).toFixed(2);
   }
 }

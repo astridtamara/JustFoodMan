@@ -10,7 +10,7 @@
     text-center
     padding-horizontal
   >
-    <ion-col> <h4>Random Process has selected ...</h4> </ion-col>
+    <ion-col> <h4>Random Process has selected ... *drumroll*</h4> </ion-col>
   </ion-row>
   <ion-row class="resto-card">
     <ion-col>
@@ -54,7 +54,9 @@
         </ion-col>
         <ion-col col-2 text-right no-padding>
           <ion-icon name="star" color="secondary"> </ion-icon>
-          <span class="rating-text">5.00</span>
+          <span class="rating-text">{{
+            parseScore(data.totalPoint, data.totalPost)
+          }}</span>
         </ion-col>
       </ion-row>
       <ion-row padding-horizontal>

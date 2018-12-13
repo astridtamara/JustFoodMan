@@ -1,5 +1,7 @@
 <ion-header>
-  <ion-navbar> <ion-title><ion-icon name="heart"></ion-icon> Favorites</ion-title> </ion-navbar>
+  <ion-navbar>
+    <ion-title><ion-icon name="heart"></ion-icon> Favorites</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
@@ -37,7 +39,9 @@
         </ion-col>
         <ion-col col-2 text-right no-padding>
           <ion-icon name="star" color="secondary"> </ion-icon>
-          <span class="rating-text">5.00</span>
+          <span class="rating-text">
+            {{ convertToNumber(data.totalPoint, data.totalPost) }}
+          </span>
         </ion-col>
       </ion-row>
       <ion-row padding-horizontal (click)="openResto(data.id)">
